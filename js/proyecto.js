@@ -62,8 +62,8 @@ class Producto {
 }
 
 
-let producto1 = new Producto(1, "cdj", 8000, 1);
-let producto2 = new Producto(2, "mixer", 4000, 4);
+let producto1 = new Producto(1, "Cdj", 8000, 1);
+let producto2 = new Producto(2, "Mixer", 4000, 4);
 let producto3 = new Producto(3, "boofer", 5000, 8);
 
 
@@ -74,7 +74,7 @@ productos.push(producto1, producto2, producto3);
 alert(
   "Lista de Productos (todos): \n\n" +
     JSON.stringify(productos, null, 0) +
-    "\n\nPara agregar al carro ingrese ID de producto"
+    "\n\nPara agregar al carrito ingrese numero de producto"
 );
 
 const carrito = [];
@@ -86,7 +86,7 @@ while (pregunto.toLowerCase() !== "no") {
   console.log(productosDisponibles);
   ingresarProductos();
 
-  pregunto = prompt("2. Agregar otro producto ? \n Si \n No");
+  pregunto = prompt("2. Desea gregar otro producto ? \n Si \n No");
 }
 
 
@@ -96,7 +96,7 @@ function ingresarProductos() {
   agregarProducto = prompt(
     "Productos Disponibles: \n\n" +
       JSON.stringify(productosDisponibles, null, 0) +
-      "\n\nPara agregar al carro ingrese ID de producto"
+      "\n\nPara agregar al carrito ingrese ID de producto"
   );
 
 
@@ -115,7 +115,7 @@ function ingresarProductos() {
     carrito.push(producto3);
     producto3.restoStock();
  
-    alert("Producto no existente o fuera de stock");
+    alert("Este producto no esxiste o fuera de stock");
   }
 
 }
@@ -127,7 +127,7 @@ alert(
 const productosComprados = carrito.map(
   (el) => "Nombre: " + el.nombre + " por $" + el.precio
 );
-alert("Productos comprados \n" + productosComprados);
+alert("Productos rentados \n" + productosComprados);
 
 if (suma) {
   let totalConIva = suma * 1.21;
