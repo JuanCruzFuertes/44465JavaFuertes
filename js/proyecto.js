@@ -206,3 +206,8 @@ function mostrarProductos() {
 }
 
 mostrarProductos();
+let boton = document.getElementById("btnAgregar(" + productos[i].id + ")");
+boton.addEventListener("click", respuestaClick);
+function respuestaClick(id) {
+    console.log("Respuesta producto agregado: " + id);
+}
