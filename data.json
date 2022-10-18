@@ -1,0 +1,9 @@
+[
+    {"id":1 , "nombre":"CDJ" , "cat":"AUDIO", "precio":"8000" , "stock":8 , "imagen":"img/cdj.png", "cantidadPedida":1},
+    {"id":2 , "nombre":"MIXER" , "cat":"AUDIO", "precio":"4000" , "stock":6 , "imagen":"", "cantidadPedida":1 },
+    {"id":3 , "nombre":"Boofer" , "cat":"AUDIO", "precio":"5000" , "stock":10 , "imagen":"", "cantidadPedida":1 },
+    {"id":4 , "nombre":"Parlantes" , "cat":"AUDIO", "precio":"4000" , "stock":20 , "imagen":"", "cantidadPedida":1 },
+    {"id":5 , "nombre":"Crm" , "cat":"accesorios", "precio":"3000" , "stock":5 , "imagen":"", "cantidadPedida":1 },
+    {"id":6 , "nombre":"soportes" , "cat":"accesorios", "precio":"2000" , "stock":20 , "imagen":"", "cantidadPedida":1 }
+    
+]

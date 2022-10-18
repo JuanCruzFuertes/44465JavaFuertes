@@ -212,120 +212,162 @@
 //     console.log("Respuesta producto agregado: " + id);
 // }
 
-suma = 0;
-cantidadPedida = 0;
+let carro = JSON.parse(localStorage.getItem("productosGuardadosJSON")) || [];
 
+const listadoProductos = document.querySelector("#listado");
 
-//Class Producto
-class Producto {
-  constructor(id, nombre, precio, stock, imagen, cantidadPedida) {
-    this.id = Number(id);
-    this.nombre = nombre.toUpperCase();
-    this.precio = parseFloat(precio);
-    this.stock = Number(stock);
-    this.imagen = imagen;
-    this.cantidadPedida = Number(cantidadPedida);
-  }
-  sumaIva() {
-    this.precio = this.precio * 1.21;
-  }
-  restoStock(cantidad) {
-    this.stock = this.stock - cantidad;
-  }
-  /*
-  calculoSubtotal() {
-    this.precio = this.precio * cantidad;
-  }*/
-
-  acumuloCantidad(cantidad) {
-    this.cantidadPedida = this.cantidadPedida + cantidad;
-  }
-}
-
-let producto1 = new Producto(1, "Cdj", 8000, 8, 0);
-let producto2 = new Producto(2, "Mixer", 4000, 6, 0);
-let producto3 = new Producto(3, "Boofer", 5000, 10, 0);
-let producto4 = new Producto(4, "Parlantes", 4000, 15, 0);
-let producto5 = new Producto(5, "Soportes", 2000, 30, 0);
-let producto6 = new Producto(6, "Crm", 8, 3000, 0);
-
-const productos = [producto1, producto2, producto3, producto4, producto5, producto6];
-const carro = [];
-
-function mostrarProductos() {
-  let html = "";
-  for (let i = 0; i < productos.length; i++) {
-    html =
-      html +
-      `<div class="col">
+function productosAHTML() {
+  fetch("data.json")
+    .then((resp) => resp.json())
+    .then((data) => {
+      // console.log(data);
+      let html = "";
+      data.forEach((producto) => {
+        html =
+          html +
+          `
+        <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-              <h4 class="my-0 fw-normal">${productos[i].nombre}</h4>
+              <h4 class="my-0 fw-normal">${producto.nombre}</h4>
             </div>
             <div class="card-body">
-              <h1 class="card-title pricing-card-title">$${productos[i].precio}</h1>
-                <img style="width:200px;height:200px;" src="${productos[i].imagen}" />
+              <h1 class="card-title pricing-card-title">$${producto.precio}</h1>
+                <img style="width:200px;height:200px;" src="${producto.imagen}" />
                   <ul class="list-unstyled mt-3 mb-4">
-                    <li><small class="text-muted fw-light">stock: ${productos[i].stock}</small></li>
-                    <li><small class="text-muted fw-light">sku: ${productos[i].id}</small></li>
+                    <li><small class="text-muted fw-light">stock: ${producto.stock}</small></li>
+                    <li><small class="text-muted fw-light">sku: ${producto.id}</small></li>
                   </ul>
-                  <span class="text-muted fw-light" >Cantidad: <input style="margin: 6px;width: 50px;" class="text-muted fw-light" type="number" id="cantidad" value></span>
-                <button onclick="agregarAlCarro(${productos[i].id});" type="button" class="w-100 btn btn-lg btn-outline-primary">Comprar</button>
+                <button onclick="productoAlCarro(${producto.id});" type="button" class="w-100 btn btn-lg btn-outline-primary">Comprar</button>
             </div>
-          </div>
+          </div> 
       </div>`;
-
-  }
-
-  document.getElementById("mis_cards").innerHTML = html;
+        document.getElementById("mis_cards").innerHTML = html;
+      });
+    });
 }
 
+productosAHTML();
 
-
-function renderCarro() {
-  if (carro.length == 0) {
-    document.getElementById("carro").innerHTML =
-      "<h3>NO HAY NADA EN EL CARRO</h3>";
-  } else {
-    //let cantidad = document.getElementById("cantidad").value;
-    //alert("cantidad")
-    let html = "";
-    for (let i = 0; i < carro.length; i++) {
-      html =
-        html +
-        `
-      <div style="border: 1px solid green;margin: 10px;">
-      <p>id: ${carro[i].id}</p>
-      <p>nombre: ${carro[i].nombre}</p>
-      <p>precio: ${carro[i].precio}</p>
-     
-      <p>
-      <img style="width:200px;height:200px;" src="${carro[i].imagen}" />
-      </p>
-      <span style="cursor:pointer;" onclick="removeFromCart(${i});">🛒</span>
-      </div>
-      `;
-    }
-    document.getElementById("carro").innerHTML = html;
-
-    if (carro.length > 0) {
-      document.getElementById("hayCarro").innerHTML = "Mostrar carro";
-    }
-  }
+function filtroRopa() {
+  fetch("data.json")
+    .then((resp) => resp.json())
+    .then((data) => {
+      const mostrarRopa = data.filter((e) => e.cat === `Audio`);
+      //console.log(mostrarRopa);
+      let html = "";
+      mostrarRopa.forEach((producto) => {
+        html =
+          html +
+          `
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">${producto.nombre}</h4>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title">$${producto.precio}</h1>
+                <img style="width:200px;height:200px;" src="${producto.imagen}" />
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li><small class="text-muted fw-light">stock: ${producto.stock}</small></li>
+                    <li><small class="text-muted fw-light">sku: ${producto.id}</small></li>
+                  </ul>
+                <button onclick="productoAlCarro(${producto.id});" type="button" class="w-100 btn btn-lg btn-outline-primary">Comprar</button>
+            </div>
+          </div> 
+      </div>`;
+        document.getElementById("mis_cards").innerHTML = html;
+      });
+    });
 }
 
-mostrarProductos();
-renderCarro();
-
-
-
-function agregarAlCarro(id) {
-  const foundProduct = productos.find((item) => item.id == id);
-
-
-
-  //alert(JSON.stringify(foundProduct, null, 0));
-  carro.push(foundProduct);
-  //producto[id].restoStock();
-  renderCarro();
+function filtroAccesorios() {
+  fetch("data.json")
+    .then((resp) => resp.json())
+    .then((data) => {
+      const mostrarAccesorios = data.filter((e) => e.cat === `accesorios`);
+      //console.log(mostrarRopa);
+      let html = "";
+      mostrarAccesorios.forEach((producto) => {
+        html =
+          html +
+          `
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">${producto.nombre}</h4>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title">$${producto.precio}</h1>
+                <img style="width:200px;height:200px;" src="${producto.imagen}" />
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li><small class="text-muted fw-light">stock: ${producto.stock}</small></li>
+                    <li><small class="text-muted fw-light">sku: ${producto.id}</small></li>
+                  </ul>
+                <button onclick="productoAlCarro(${producto.id});" type="button" class="w-100 btn btn-lg btn-outline-primary">Comprar</button>
+            </div>
+          </div> 
+      </div>`;
+        document.getElementById("mis_cards").innerHTML = html;
+      });
+    });
 }
+
+//const carro = [];
+
+function productoAlCarro(id) {
+  fetch("data.json")
+    .then((res) => res.json())
+    .then((productos) => {
+      const foundProduct = productos.find((item) => item.id == id);
+      carro.push(foundProduct);
+      console.log(carro);
+      //console.log("found " + foundProduct);
+
+      Swal.fire({
+        title: "Producto agregado",
+        icon: "success",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Seguir comprando",
+        denyButtonText: `Ir al checkout`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+          window.location.href = `/Tienda3/checkout.html`;
+        }
+      });
+
+      guardoCarroStorage();
+      if (carro) {
+        document.getElementById("hayCarro").innerHTML =
+          "<button class='btn btn-danger'>Checkout</button>";
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+let guardoCarroStorage = () => {
+  let carroAJson = JSON.stringify(carro);
+  localStorage.setItem("productosGuardadosJSON", carroAJson);
+};
+
+/*llamadas filtros*/
+let llamoTodos = document.getElementById("llamoTodos");
+llamoTodos.onclick = () => {
+  productosAHTML();
+};
+
+let llamoAudio = document.getElementById("llamoAudio");
+llamoLimpieza.onclick = () => {
+  filtroaudio();
+};
+
+
+
+let llamoAccesorios = document.getElementById("llamoAccesorios");
+llamoAccesorios.onclick = () => {
+  filtroAccesorios();
+};

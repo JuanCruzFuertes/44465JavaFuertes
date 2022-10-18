@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Hugo 0.101.0" />
-    <title>Rental Audio</title>
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="favicon" /> agregar favicon
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,56 +12,106 @@
       crossorigin="anonymous"
     />
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Rental Audio</Audio></title>
   </head>
   <body>
-    
-
     <div class="container py-3">
       <header>
         <div
           class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom"
         >
           <a
-            href="/"
+            href="index.html"
             class="d-flex align-items-center text-dark text-decoration-none"
           >
-           
-            <span class="fs-4">Rental Audio</span>
+            <img src="imagen(agregar)" alt="Rental Audio" title="Rental Audio" />
           </a>
 
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <a id="hayCarro" class="me-3 py-2 text-dark text-decoration-none" href="#"
-              ></a
+            <button
+              class="me-3 py-2 text-dark text-decoration-none btn btn-info"
+              href="index.html"
             >
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#"
-              >Menu</a
-            >
-           
-          </nav>
-        </div>
+              Ver Productos
+            </button>
 
-        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-          <h1 class="display-4 fw-normal">RENTAL DISPONIBLE</h1>
-          
+            <a
+              class="me-3 py-2 text-dark text-decoration-none"
+              id="hayCarro"
+              href="checkout.html"
+            ></a>
+          </nav>
         </div>
       </header>
 
       <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center" id="mis_cards">
-       <!-- Render productos -->
+        <div class="dropdown mt-3">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+          >
+            Filtrar productos
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a class="dropdown-item" href="#" id="llamoTodos">Todos</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" id="llamoLimpieza">Audio</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" id="llamoRopa">Accesorios</a>
+            </li>
+          </ul>
         </div>
-
-        <div id="carro"></div>
+        <hr />
+        <div
+          class="row row-cols-1 row-cols-md-3 mb-3 text-center"
+          id="mis_cards"
+        >
+          <!-- Render productos -->
+        </div>
       </main>
-
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
           <div class="col-12 col-md">
-            <small class="d-block mb-3 text-muted">&copy; 2022</small>
-         
+            <small class="d-block mb-3 text-muted"
+              >&copy; 2022 - Rental audio
+            </small>
+          </div>
+          <div class="col-6 col-md"><p>Todo lo que necesitas para que sea una fiesta</p></div>
+
+          <div class="col-6 col-md">
+            <p></p>
+          </div>
+        </div>
       </footer>
     </div>
-    <script src="js/proyecto.js"></script>
   </body>
+  <script src="js/proyecto.js"></script>
+  <script
+    async
+    src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"
+  ></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/esm/popper.js",
+        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.esm.min.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as bootstrap from "bootstrap";
+    document
+      .querySelectorAll('[data-bs-toggle="popover"]')
+      .forEach((popover) => {
+        new bootstrap.Popover(popover);
+      });
+  </script>
 </html>
