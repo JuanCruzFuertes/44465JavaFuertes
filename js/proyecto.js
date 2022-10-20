@@ -3,9 +3,9 @@
 // );
 // let ingresados = "";
 // let suma = 0;
-// while (entrada.toLowerCase() !== "finalizar") { 
+// while (entrada.toLowerCase() !== "finalizar") {
 //     switch (entrada) {
-    
+
 //         case "1":
 //         entrada = "Cdj por 8000";
 //         alert("Cdj $8000 Agregado");
@@ -31,13 +31,11 @@
 //         alert("Debes indicar un numero del 1 al 3");
 //     }
 
-
 //     entrada = prompt(
 //         "Ingrese numero de producto que desea rentar\n1. Cdj $8000\n2. mixer $4000\n3. boofer $5000\n\n Escriba finalizar para terminar el pedido."
 //     );
 // }
 // alert("Su pedido\n" + ingresados + "\n Total :" + suma);
-
 
 //Agrego Arrays
 // suma = 0;
@@ -61,12 +59,9 @@
 //   }
 // }
 
-
 // let producto1 = new Producto(1, "Cdj", 8000, 1);
 // let producto2 = new Producto(2, "Mixer", 4000, 4);
 // let producto3 = new Producto(3, "boofer", 5000, 8);
-
-
 
 // const productos = [];
 // productos.push(producto1, producto2, producto3);
@@ -79,7 +74,6 @@
 
 // const carrito = [];
 
-
 // let pregunto = "si";
 // while (pregunto.toLowerCase() !== "no") {
 //   let productosDisponibles = productos.filter((el) => el.stock > 0);
@@ -88,7 +82,6 @@
 
 //   pregunto = prompt("2. Desea gregar otro producto ? \n Si \n No");
 // }
-
 
 // function ingresarProductos() {
 //   let productosDisponibles = productos.filter((el) => el.stock > 0);
@@ -99,22 +92,21 @@
 //       "\n\nPara agregar al carrito ingrese ID de producto"
 //   );
 
-
 //   if (agregarProducto == 1 && producto1.stock > 0) {
 //     carrito.push(producto1);
 //     producto1.restoStock();
 
 //     suma += producto1.precio;
-    
+
 //   } else if (agregarProducto == 2 && producto2.stock > 0) {
 //     carrito.push(producto2);
 //     producto2.restoStock();
-    
+
 //     suma += producto2.precio;
 //   } else if (agregarProducto == 3 && producto3.stock > 0) {
 //     carrito.push(producto3);
 //     producto3.restoStock();
- 
+
 //     alert("Este producto no esxiste o fuera de stock");
 //   }
 
@@ -153,7 +145,6 @@
 //     `;
 //     contenedor.append(item);
 // });
-
 
 // suma = 0;
 // cantidadPedida = 0;
@@ -198,7 +189,7 @@
 //         <p>Precio: ${productos[i].precio}</p>
 //         <div><small>Stock: ${productos[i].stock}</small>
 //         <small>Id: ${productos[i].id}</small> </div>
-//         <button id="btnAgregar">Agregar al Carro</button> 
+//         <button id="btnAgregar">Agregar al Carro</button>
 //         </div>`;
 
 //     document.getElementById("contenedor").innerHTML = html;
@@ -216,13 +207,15 @@ let carro = JSON.parse(localStorage.getItem("productosGuardadosJSON")) || [];
 
 const listadoProductos = document.querySelector("#listado");
 
+let allProductos = []; //Metemos todo aca, para no repetir el pedido en los filtros. directamente filtramos este array
 function productosAHTML() {
   fetch("data.json")
     .then((resp) => resp.json())
     .then((data) => {
       // console.log(data);
       let html = "";
-      data.forEach((producto) => {
+      allProductos = data; // aca asignamos
+      allProductos.forEach((producto) => {
         html =
           html +
           `
@@ -246,20 +239,16 @@ function productosAHTML() {
       });
     });
 }
-
 productosAHTML();
 
-function filtroRopa() {
-  fetch("data.json")
-    .then((resp) => resp.json())
-    .then((data) => {
-      const mostrarRopa = data.filter((e) => e.cat === `Audio`);
-      //console.log(mostrarRopa);
-      let html = "";
-      mostrarRopa.forEach((producto) => {
-        html =
-          html +
-          `
+function filtroAudio() {
+  const audioProductos = allProductos.filter((e) => e.cat === "AUDIO"); //* Estaba filtrando mal!!
+  //console.log(mostrarRopa);
+  let html = "";
+  audioProductos.forEach((producto) => {
+    html =
+      html +
+      `
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
@@ -276,22 +265,20 @@ function filtroRopa() {
             </div>
           </div> 
       </div>`;
-        document.getElementById("mis_cards").innerHTML = html;
-      });
-    });
+    document.getElementById("mis_cards").innerHTML = html;
+  });
 }
 
 function filtroAccesorios() {
-  fetch("data.json")
-    .then((resp) => resp.json())
-    .then((data) => {
-      const mostrarAccesorios = data.filter((e) => e.cat === `accesorios`);
-      //console.log(mostrarRopa);
-      let html = "";
-      mostrarAccesorios.forEach((producto) => {
-        html =
-          html +
-          `
+  const accesoriosProductos = allProductos.filter(
+    (e) => e.cat === "ACCESORIOS" //Aca tambien lo mismo
+  );
+  console.log(accesoriosProductos);
+  let html = "";
+  accesoriosProductos.forEach((producto) => {
+    html =
+      html +
+      `
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
@@ -308,9 +295,8 @@ function filtroAccesorios() {
             </div>
           </div> 
       </div>`;
-        document.getElementById("mis_cards").innerHTML = html;
-      });
-    });
+    document.getElementById("mis_cards").innerHTML = html;
+  });
 }
 
 //const carro = [];
@@ -362,12 +348,10 @@ llamoTodos.onclick = () => {
 
 let llamoAudio = document.getElementById("llamoAudio");
 llamoLimpieza.onclick = () => {
-  filtroaudio();
+  filtroAudio();
 };
-
-
 
 let llamoAccesorios = document.getElementById("llamoAccesorios");
 llamoAccesorios.onclick = () => {
-  filtroAccesorios();
+  filtroAccesorios(); //Estaba mal el ID de este elemento y no reocnocia el evento
 };
