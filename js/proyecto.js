@@ -216,13 +216,15 @@ let carro = JSON.parse(localStorage.getItem("productosGuardadosJSON")) || [];
 
 const listadoProductos = document.querySelector("#listado");
 
+let allProductos = []; 
 function productosAHTML() {
   fetch("data.json")
     .then((resp) => resp.json())
     .then((data) => {
       // console.log(data);
       let html = "";
-      data.forEach((producto) => {
+      allProductos = data; // aca asignamos
+      allProductos.forEach((producto) => {
         html =
           html +
           `
@@ -246,21 +248,16 @@ function productosAHTML() {
       });
     });
 }
-
 productosAHTML();
-
-function filtroRopa() {
-  fetch("data.json")
-    .then((resp) => resp.json())
-    .then((data) => {
-      const mostrarRopa = data.filter((e) => e.cat === `Audio`);
-      //console.log(mostrarRopa);
-      let html = "";
-      mostrarRopa.forEach((producto) => {
-        html =
-          html +
-          `
-        <div class="col">
+function filtroAudio() {
+  const audioProductos = allProductos.filter((e) => e.cat === "AUDIO"); 
+  //console.log(mostrarRopa);
+  let html = "";
+  audioProductos.forEach((producto) => {
+    html =
+      html +
+      `
+      <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
               <h4 class="my-0 fw-normal">${producto.nombre}</h4>
@@ -276,22 +273,20 @@ function filtroRopa() {
             </div>
           </div> 
       </div>`;
-        document.getElementById("mis_cards").innerHTML = html;
-      });
-    });
+      document.getElementById("mis_cards").innerHTML = html;
+  });
 }
 
 function filtroAccesorios() {
-  fetch("data.json")
-    .then((resp) => resp.json())
-    .then((data) => {
-      const mostrarAccesorios = data.filter((e) => e.cat === `accesorios`);
-      //console.log(mostrarRopa);
-      let html = "";
-      mostrarAccesorios.forEach((producto) => {
-        html =
-          html +
-          `
+  const accesoriosProductos = allProductos.filter(
+    (e) => e.cat === "ACCESORIOS" 
+  );
+  console.log(accesoriosProductos);
+  let html = "";
+  accesoriosProductos.forEach((producto) => {
+    html =
+      html +
+      `
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
@@ -308,13 +303,10 @@ function filtroAccesorios() {
             </div>
           </div> 
       </div>`;
-        document.getElementById("mis_cards").innerHTML = html;
-      });
-    });
+      document.getElementById("mis_cards").innerHTML = html;
+  });
 }
-
 //const carro = [];
-
 function productoAlCarro(id) {
   fetch("data.json")
     .then((res) => res.json())
@@ -322,8 +314,8 @@ function productoAlCarro(id) {
       const foundProduct = productos.find((item) => item.id == id);
       carro.push(foundProduct);
       console.log(carro);
+      
       //console.log("found " + foundProduct);
-
       Swal.fire({
         title: "Producto agregado",
         icon: "success",
@@ -337,7 +329,6 @@ function productoAlCarro(id) {
           window.location.href = `/Tienda3/checkout.html`;
         }
       });
-
       guardoCarroStorage();
       if (carro) {
         document.getElementById("hayCarro").innerHTML =
@@ -348,25 +339,19 @@ function productoAlCarro(id) {
       console.log(e);
     });
 }
-
 let guardoCarroStorage = () => {
   let carroAJson = JSON.stringify(carro);
   localStorage.setItem("productosGuardadosJSON", carroAJson);
 };
-
 /*llamadas filtros*/
 let llamoTodos = document.getElementById("llamoTodos");
 llamoTodos.onclick = () => {
   productosAHTML();
 };
-
 let llamoAudio = document.getElementById("llamoAudio");
 llamoLimpieza.onclick = () => {
-  filtroaudio();
+  filtroAudio();
 };
-
-
-
 let llamoAccesorios = document.getElementById("llamoAccesorios");
 llamoAccesorios.onclick = () => {
   filtroAccesorios();
