@@ -71,9 +71,9 @@ body {
               }
   
               span#vacio {
-                             text-align: center;
-                             border: 1px solid grey;
-                             width: 100%;
-                             display: block;
-                             padding: 10px;
-                           }
+                text-align: center;
+                border: 1px solid grey;
+                width: 100%;
+                display: block;
+                padding: 10px;
+                          }

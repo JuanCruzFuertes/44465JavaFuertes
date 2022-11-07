@@ -22,7 +22,7 @@ if (carritoEnLS) {
         html =
           html +
           `
-     <tr>
+    <tr>
       <td>${carro[i].id}</td>
       <td>${carro[i].nombre}</td>
       <td>${carro[i].cantidadPedida}</td>
@@ -78,27 +78,27 @@ function dibujoCarro() {
       html =
         html +
         `
-     <tr>
-      <td>${carro[i].id}</td>
-      <td>${carro[i].nombre}</td>
-      <td>${carro[i].cantidadPedida}</td>
-      <td> ${carro[i].precio}</td>
-      <td> ` +
-        subTotalItem +
-        ` </td>    
-      <td><span style="cursor:pointer;" onclick="borrarItem(${[
-        i,
-      ]});"> X </span></td>
-      </tr>     
-      `;
+        <tr>
+        <td>${carro[i].id}</td>
+        <td>${carro[i].nombre}</td>
+        <td>${carro[i].cantidadPedida}</td>
+        <td> ${carro[i].precio}</td>
+        <td> ` +
+          subTotalItem +
+          ` </td>    
+        <td><span style="cursor:pointer;" onclick="borrarItem(${[
+          i,
+        ]});"> X </span></td>
+        </tr>     
+        `;
+      }
+  
+      document.getElementById("carro").innerHTML = html;
+      document.getElementById("totalCarro").innerHTML =
+        "<b>Total Pedido: " + totalCarro + "</b>";
+  
+      document.getElementById("carroMail").value = html;
+      document.getElementById("totalCarroMail").value = totalCarro;
     }
-
-    document.getElementById("carro").innerHTML = html;
-    document.getElementById("totalCarro").innerHTML =
-      "<b>Total Pedido: " + totalCarro + "</b>";
-
-    document.getElementById("carroMail").value = html;
-    document.getElementById("totalCarroMail").value = totalCarro;
   }
-}
-dibujoCarro();
+  dibujoCarro();
